@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2640501_9gli31s6p6.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            text-decoration: none;
+        }
+        main {
+            width: 100%;
+        }
+
+        #menu {
+            width: 1400px;
+            height: 54px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            color: #333333;
+            font-size: 14px;
+            padding-left: 240px;
+        }
+
+        #menu li {
+            margin-right: 34px;
+            cursor: pointer;
+        }
+
+        .topBox {
+            width: 1400px;
+            margin: 40px auto;
+            display: flex;
+            justify-content: space-between;
+            /* 使每个弹性盒子保持自身的高度，并位于容器顶部 */
+            align-items: flex-start;
+        }
+
+        .topSort {
+            width: 264px;
+            background-color: #fff;
+            box-shadow: 0 3px 3px rgba(0,0,0,.2);
+        }
+
+        .topTitle {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border-bottom: 1px solid #f2f2f2;
+            padding: 0 24px;
+            color: #333;
+        }
+
+        .topSortBox {
+            margin-top: 10px;
+        }
+
+        .topSortBox img {
+            width: 60px;
+            margin-right: 12px;
+        }
+
+        .sortItem {
+            height: 80px;
+            display: flex;
+            font-size: 14px;
+            padding: 0 24px;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .sortItem:hover{
+            background-color: #fafafa;
+        }
+
+        .title {
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .time {
+            color: #999999;
+        }
+
+        .topListBox {
+            width: 1066px;
+        }
+
+        .listTitle {
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .listTitle h1 {
+            font-size: 38px;
+            color: #333;
+        }
+
+        .listTitle span {
+            font-size: 14px;
+            color: #999999;
+            margin-left: 10px;
+        }
+
+        .topList li{
+            width: 100%;
+            padding-left: 30px;
+            display: flex;
+            font-size: 14px;
+            height: 70px;
+            line-height: 70px;
+            color: #666666;
+        }
+
+        .topList li:hover{
+            background-color: #f5f5f5;
+        }
+
+        .topList div{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .topList img{
+            width: 54px;
+            height: 54px;
+        }
+
+        .topList span{
+            color: black;
+            font-weight: bold;
+            margin-right: 120px;
+        }
+
+        .topList li:first-child{
+            font-size: 12px;
+        }
+
+        .topList>li div:first-child{
+            width: 234px;
+            display: flex;
+            align-items: center;
+        }
+        .topList>li div:nth-of-type(2){
+            width: 296px;
+        }
+        .topList>li div:nth-of-type(3){
+            width: 190px;
+        }
+        .topList>li div:nth-of-type(4){
+            width: 275px;
+        }
+        .topList>li div:nth-of-type(5){
+            width: 70px;
+        }
+        .btns{
+            width: 100%;
+            text-align: center;
+            margin-top: 30px;
+        }
+        #update{
+            font-style: normal;
+        }
+    </style>
+</head>
+
+<body>
+  
+    <main>
+        <div class="topBox">
+            <div class="topSort">
+                <ul class="topTitle">
+                    <li>官方榜</li>
+                    <li>特色榜</li>
+                    <li>场景榜</li>
+                </ul>
+                <ul class="topSortBox">
+
+                </ul>
+            </div>
+            <div class="topListBox">
+                <div class="listTitle">
+                    <h1 id="topName">酷我飙升榜</h1>
+                    <span id="update">
+                    </span>
+                </div>
+                <div class="listMenu"></div>
+                <ul class="topList"></ul>
+                <div class="btns">
+                    <button id="pre">上一页</button>
+                    共：<span id="pageNum"></span> 页
+                    <button id="next">下一页</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./ajax.js"></script>
+    <script>
+        var search = document.getElementById('search');
+        var keyBox = document.getElementById('keyBox');
+        var audio = document.getElementById('audio');
+        var sourceid = 0;
+        var name1 = '';
+        var num1 = 0;
+
+        $('#menu li').click(function () {
+            if ($(this).html() == '排行榜') {
+                $('#menu li').css('font-weight', 'normal');
+                $(this).css('font-weight', 'bold');
+            }
+            if ($(this).html() == '推荐') {
+                $('#menu li').css('font-weight', 'normal');
+                $(this).css('font-weight', 'bold');
+                location.href = './index.html';
+            }
+        })
+
+
+        function setKey(str, reg) {
+            if (!reg.test(str)) {
+                return str;
+            }
+            var result = str.replace(reg, (el) => {
+                return `<span style="color: #AC7BA2">${el}</span>`
+            })
+            return result;
+        }
+
+        console.log($('.sortItem').eq(0));
+        $('.sortItem').eq(0).css('background-color', '#f2f2f2');
+
+        // 获取榜单
+        function getMenu(i) {
+            ajax({
+                method: 'get',
+                url: 'http://39.96.88.57:9090/api/www/bang/bang/bangMenu?',
+                success: function (res) {
+                    console.log(res);
+                    if (res.code != 200) {
+                        return alert(res.msg);
+                    }
+                    $('.topSortBox').html('');
+                    $.each(res.data[i].list, function (index, n) {
+                        $('.topSortBox').append(`
+                            <li class="sortItem" onclick="getTopList(${n.sourceid}, '${n.name},')">
+                                <img src=${n.pic}>
+                                <div>
+                                    <p class="title">${n.name}</p>
+                                    <p class="time">${n.pub}</p>
+                                </div>
+                            </li>
+                        `)
+                    })
+                }
+            })
+        }
+
+        // 初始化榜单
+        getMenu(0);
+
+        $('.topTitle').click(function () {
+            if ($(event.target).html() == '官方榜') {
+                getMenu(0);
+            }
+            if ($(event.target).html() == '特色榜') {
+                getMenu(1);
+            }
+            if ($(event.target).html() == '场景榜') {
+                getMenu(2);
+            }
+        })
+        var pn = 1;
+        var rn = 30;
+        // 下一页
+        $('#next').click(function () {
+            console.log(sourceid, name1);
+            if (pn < Math.ceil(num1 / rn)) {
+                pn++;
+                getTopList(sourceid, name1);
+            }
+        })
+        // 下一页
+        $('#pre').click(function () {
+            if (pn > 1) {
+                pn--;
+                getTopList(sourceid, name1);
+            }
+        })
+
+        // 获取排行列表
+        function getTopList(id, name) {
+            sourceid = id;
+            name1 = name;
+            ajax({
+                method: 'get',
+                url: `http://39.96.88.57:9090/api/www/bang/bang/musicList?bangId=${id}&pn=${pn}&rn=${rn}`,
+                success: function (res) {
+                    console.log(res);
+                    $('#topName').html(`${name}`);
+                    $('#update').html(`更新时间：${res.data.pub}`)
+                    if (res.code != 200) {
+                        return alert(res.msg);
+                    }
+                    num1 = res.data.num;
+                    $('#pageNum').html(`${Math.ceil(res.data.num / rn)}`);
+                    $('.topList').html(`
+                            <li>
+                                <div>序号</div>
+                                <div>歌曲</div>
+                                <div>歌手</div>
+                                <div>专辑</div>
+                                <div>时长</div>
+                            </li>
+                    `);
+                    var num = (pn - 1) * rn + 1;
+                    $.each(res.data.musicList, function (index, n) {
+                        $('.topList').append(`
+                            <li>
+                                <div>
+                                    <span>${num}</span>
+                                    <img src=${n.albumpic}>
+                                </div>
+                                <div>${n.name}</div>
+                                <div>${n.artist}</div>
+                                <div>${n.album}</div>
+                                <div>${n.songTimeMinutes}</div>
+                            </li>
+                        `)
+                        num++;
+                    })
+                    $('.topList li').eq(0).css({
+                        height: '46px',
+                        lineHeight: '46px',
+                        color: '#999999'
+                    })
+                    $('.topList li:even').css('background-color', '#FAFAFA');
+                }
+            })
+        }
+
+        // 初始化榜单列表
+        getTopList(93, '酷我飙升榜');
+        
+    </script>
+</body>
+
+</html>

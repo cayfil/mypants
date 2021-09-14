@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+    <script src="./ajax1.js"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2807955_dmmu3uxj74p.css">
+    <link rel="stylesheet" href="./酷我.css">
+    <link rel="stylesheet" href="./inco.css">
+</head>
+
+<body>
+    <nav>
+        <div id="nav-box">
+            <div id="nav-box-left">
+                <img src="https://h5static.kuwo.cn/www/kw-www/img/logo.dac7499.png" alt="">
+                <ul>
+                    <li>发现音乐</li>
+                    <li>下载客户端</li>
+                    <li>音乐现场</li>
+                    <li>VIP会员</li>
+                    <li>酷我畅听</li>
+                    <li>酷我耳机</li>
+                    <li id="more">更多 <i class="iconfont icon-arrow-down"></i></li>
+                    <ul class="moreContent">
+                        <li>酷我音乐人</li>
+                        <li>HiFi音乐</li>
+                        <li>酷我视频</li>
+                        <li>主播电台</li>
+                    </ul>
+                </ul>
+            </div>
+            <div id="nav-box-right">
+                <div id="searchBox" tabindex="1">
+                    <div id="search">
+                        <i class="iconfont icon-fangdajing"></i>
+                        <input id="sou" type="text" placeholder="搜索音乐/MV/歌单/歌手">
+                    </div>
+                    <ul id="hotSearch">
+                        <p>大家都在搜</p>
+                    </ul>
+                </div>
+                <div>
+                    <span>登录</span>
+                    <span>/</span>
+                    <span>注册</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="box">
+        <div class="titleBox">
+            <div class="title1">
+                <span id="shouye">推荐</span>
+                <span id="list">排行榜</span>
+                <span id="geshou">歌手</span>
+                <span id="gedan">歌单</span>
+                <span>MV</span>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+
+    </div>
+    <footer>
+        <div class="topFooter">
+            <div class="w1400">
+                <div>
+                    <h3>下载酷我音乐客户端</h3>
+                    <ul>
+                        <li>
+                            <i></i>
+                            <p>&nbsp;PC版</p>
+                        </li>
+                        <li>
+                            <i></i>
+                            <p>Android</p>
+                        </li>
+                        <li>
+                            <i></i>
+                            <p>iPhone版</p>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>协议与声明</h3>
+                    <p>
+                        <span>用户服务协议</span>
+                        <span>免责声明</span>
+                        <span>用户权限</span>
+                    </p>
+                    <p>
+                        <span style="margin-right: 64px;">隐私政策</span>
+                        <span>权利声明</span>
+                    </p>
+                </div>
+                <div>
+                    <h3>其它</h3>
+                    <p>
+                        <span>联系我们</span>
+                        <span>腾讯音乐</span>
+                        <span>诚聘英才</span>
+                    </p>
+                    <p>
+                        <span>广告服务</span>
+                        <span>网上有害信息举报专区</span>
+                    </p>
+                </div>
+                <div>
+                    <h3>合作链接</h3>
+                    <p>
+                        <span>QQ音乐</span>
+                    </p>
+                    <p>
+                        <span>酷狗听书</span>
+                    </p>
+                </div>
+            </div>
+            <div>
+                <h3></h3>
+            </div>
+        </div>
+        <div class="bottomFooter">
+            <ul>
+                <li>北京酷我科技有限公司版权所有 丨 网络文化经营许可证：</li>
+                <li class="changeColor">京网文[2015]0525-205号</li>
+                <li>信息网络传播视听节目许可证0109362号</li>
+                <li>丨 增值电信业务经营许可证B2-20090418 丨 </li>
+                <li class="changeColor">京ICP证060261号</li>
+            </ul>
+            <ul>
+                <li class="changeColor">广播电视节目制作经营许可证京字第2037号</li>
+                <li> 丨</li>
+                <li class="changeColor"> 营业性演出许可证京市演1574</li>
+                <li> 丨</li>
+                <li class="changeColor"> 京公网安备11010502030216号</li>
+                <li> 丨</li>
+                <li class="changeColor"> 京ICP备09014827号</li>
+            </ul>
+            <ul>
+                <li>应用版本：9.4.4.0 丨 开发者：北京酷我科技有限公司 丨 举报电话：010-87939949丨 举报邮箱：support@kuwo.cn 丨</li>
+                <li class="changeColor">未成年人监督举报入口</li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        var arr = [];
+        $(window).load(function () {
+            ajax('get', 'http://39.96.88.57:9090/api/www/search/searchKey?key=&httpsStatus=1&reqId=ef5b5fb0-1443-11ec-bd55-2ff8ee753899', null, function (res) {
+                arr = res.data;
+            })
+            $('#content').load('./首页.html');
+        })
+        $('#sou').focus(function () {
+            $('.resou').click(function () {
+                $('#sou').val(`${$('.resou').text()}`)
+            })
+            arr.forEach((item, index) => {
+                if (index == 0) {
+                    $('#hotSearch').append(`<li class = 'resou'><span id='xuhao' class='resou1'>${index + 1}</span>${item}</li>`)
+                } else if (index == 1) {
+                    $('#hotSearch').append(`<li class = 'resou'><span id='xuhao' class='resou2'>${index + 1}</span>${item}</li>`)
+                } else if (index == 2) {
+                    $('#hotSearch').append(`<li class = 'resou'><span id='xuhao' class='resou3'>${index + 1}</span>${item}</li>`)
+                } else {
+                    $('#hotSearch').append(`<li class = 'resou'><span id='xuhao'>${index + 1}</span>${item}</li>`)
+                }
+            });
+            $('#hotSearch').addClass('hot')
+        })
+        $('#sou').blur(function () {
+
+            $('#hotSearch').html('<p>大家都在搜</p>')
+            $('#hotSearch').removeClass('hot')
+        })
+
+        $('#shouye').click(function () {
+            $('#content').load('./首页.html');
+        })
+        $('#list').click(function () {
+            $('#content').load('./榜单.html');
+        })
+        $('#geshou').click(function () {
+            $('#content').load('./歌手.html');
+        })
+        $('#gedan').click(function () {
+            $('#content').load('./歌单.html');
+        })
+    </script>
+</body>
+
+</html>

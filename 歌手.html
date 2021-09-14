@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+    <script src="./ajax1.js"></script>
+    <link rel="stylesheet" href="./inco.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        #music-box {
+            width: 1400px;
+            margin: auto;
+        }
+
+        #music-box>ul {
+            display: flex;
+            margin-top: 30px;
+        }
+
+        #music-box>ul li {
+            font-size: 14px;
+            padding: 3px 8px;
+            margin-right: 14px;
+            border-radius: 14px;
+            cursor: pointer;
+        }
+
+        .checked {
+            font-weight: 700;
+            background-color: #FFE443;
+        }
+
+        #bpic {
+            width: 189px;
+            height: 189px;
+            border-radius: 50%;
+            display: block;
+            margin: auto;
+        }
+
+        #spic {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        #singer #big,
+        #singer #small {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #singer #big li img,
+        #singer #small li img,
+        #singer #small li span,
+        #singer #big li div {
+            cursor: pointer;
+        }
+
+        #singer #small li div,
+        #singer #big li div {
+            margin-top: 10px;
+        }
+
+        #page {
+            text-align: center;
+        }
+
+        .pageNum,
+        .last,
+        .next {
+            display: inline-block;
+            width: 42px;
+            height: 42px;
+            margin: 0 3px;
+            line-height: 42px;
+            cursor: pointer;
+        }
+
+        .more {
+            display: inline-block;
+            width: 42px;
+            height: 42px;
+            margin: 0 3px;
+            line-height: 42px;
+        }
+
+        #hezi {
+            width: 100%;
+            height: 314px;
+            background-color: #F5F5F5;
+        }
+
+        #singer-massage {
+            width: 1400px;
+            margin: auto;
+            padding: 42px 0;
+            display: flex;
+        }
+
+        #singer-massage img {
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+        }
+
+        #massage {
+            padding: 20px;
+            margin-left: 10px;
+        }
+
+        #massage p {
+            font-size: 30px;
+            font-weight: 400;
+            color: #333;
+        }
+
+        #massage #song {
+            margin: 16px 0;
+            font-size: 18px;
+            color: #999;
+        }
+
+        #massage #song span {
+            margin-right: 40px;
+        }
+
+        #massage #another {
+            width: 600px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 14px;
+            color: #999;
+        }
+
+        #massage #another span {
+            margin: 0 10px;
+        }
+
+        #massage #btns {
+            margin-top: 32px;
+        }
+
+        #massage #btns button {
+            font-size: 16px;
+            margin-right: 10px;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 20px;
+        }
+
+        #massage #btns button:nth-of-type(1) {
+            background-color: #ffe12c;
+        }
+
+        #taowa {
+            width: 100%;
+        }
+        #geshouhezi {
+            width: 1400px;
+            margin: auto;
+        }
+
+        .topFooter li:nth-child(1) i::before {
+            content: "\e611";
+            font-family: iconfont1;
+            font-style: normal;
+        }
+
+        .topFooter li:nth-child(2) i::before {
+            content: "\e60f";
+            font-family: iconfont1;
+            font-style: normal;
+        }
+
+        .topFooter li:nth-child(3) i::before {
+            content: "\e60d";
+            font-family: iconfont1;
+            font-style: normal;
+        }
+        #fenlei{
+            margin: 20px 0;
+            display: flex;
+        }
+        #fenlei li{
+            margin-right: 46px;
+            font-size: 22px;
+            color: #333333;
+            font-weight: lighter;
+        }
+        table{
+            width: 100%;
+        }
+        th{
+            text-align: left;
+            padding: 7px 0;
+            font-size: 14px;
+            color: #999;
+        }
+        td{
+            font-size: 14px;
+            color: #333;
+            padding: 5px 0;
+        }
+        th:nth-of-type(1),tr td:nth-of-type(1){
+            text-align: center;
+            width: 10%;
+        }
+        th:nth-of-type(2),tr td:nth-of-type(2){
+            width: 41.8%;
+        }
+        th:nth-of-type(3),tr td:nth-of-type(3){
+            width: 34.7%;
+        }
+        th:nth-of-type(4),tr td:nth-of-type(4){
+            width: 6.5%;
+        }
+        td>img{
+            width: 54px;
+            height: 54px;
+            margin-left: 30px;
+            vertical-align: middle;
+        }
+        tr:nth-of-type(1),.fafafa{
+            background-color: #fafafa;
+        }
+        tr:nth-of-type(1):hover{
+            background-color: #FAFAFA;
+        }
+        tr:hover{
+            background-color: #F5F5F5;
+        }
+        td #xuhao{
+            display: inline-block;
+            width: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="taowa">
+        <div id="music-box">
+            <ul uid='0' id="remen">
+
+            </ul>
+            <ul uid='0' id="guojia">
+
+            </ul>
+            <div id="singer">
+                <ul id="big">
+
+                </ul>
+                <ul id="small">
+
+                </ul>
+                <div id="page">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        var str = 'A';
+        var arr = ['全部', '华语男', '华语女', '华语组合', '日韩男', '日韩女', '日韩组合', '欧美男', '欧美女', '欧美组合', '其他'];
+        str = str.charCodeAt();
+        for (let i = 0; i < 28; i++) {
+            if (i == 0) {
+                $('#remen').append('<li uid =>热门</li>');
+                $('#guojia').append(`<li uid = \'${i}\'>${arr[i]}</li>`);
+            } else if (i < arr.length) {
+                $('#remen').append(`<li uid = \'${String.fromCharCode(str - 1 + i)}\'>${String.fromCharCode(str - 1 + i)}</li>`)
+                $('#guojia').append(`<li uid = \'${i}\'>${arr[i]}</li>`);
+            } else if (i == 27) {
+                $('#remen').append('<li uid = `%2523`>#</li>')
+            } else {
+                $('#remen').append(`<li uid = \'${String.fromCharCode(str - 1 + i)}\'>${String.fromCharCode(str - 1 + i)}</li>`)
+            }
+        }
+
+        var a = '', b = 0, c = 0, d = 1;
+        reset();
+        function reset() {
+            $('#remen').click(shaixuan);
+            $('#guojia').click(shaixuan);
+            ajax('get', `http://39.96.88.57:9090/api/www/artist/artistInfo?category=${b}&prefix=${a}&pn=${d}&rn=102&httpsStatus=1&reqId=7434a270-1492-11ec-a39a-59b2cec6d344`, null, function (res) {
+                change(res);
+            })
+
+            $('#remen li').eq(0).addClass('checked');
+            $('#guojia li').eq(0).addClass('checked');
+            function shaixuan() {
+                if (this.id == 'remen' && event.target.nodeName != 'UL' && !($(event.target).hasClass('checked'))) {
+                    $('#remen li').filter('.checked').removeClass('checked');
+                    $(event.target).addClass('checked')
+                    a = $(event.target).attr('uid')
+                    $('#singer').html(`<ul id="big"></ul><ul id="small"></ul><div id="page"></div>`);
+                } else if (this.id == 'guojia' && event.target.nodeName != 'UL' && !($(event.target).hasClass('checked'))) {
+                    $('#guojia li').filter('.checked').removeClass('checked');
+                    $(event.target).addClass('checked')
+                    b = $('#guojia li').index($(event.target))
+                    $('#singer').html(`<ul id="big"></ul><ul id="small"></ul><div id="page"></div>`);
+                } else {
+                    return;
+                }
+                ajax('get', `http://39.96.88.57:9090/api/www/artist/artistInfo?category=${b}&prefix=${a}&pn=1&rn=102&httpsStatus=1&reqId=7434a270-1492-11ec-a39a-59b2cec6d344`, null, function (res) {
+                    console.log(res);
+                    change(res);
+                })
+            }
+            function change(res) {
+                console.log(res);
+                res.data.artistList.forEach((item, index) => {
+                    if (d == 1) {
+                        if (index < 12) {
+                            $('#big').append(`<li uid= '${item.id}' style = 'width:200px;height:246px;margin: 40px 25px 0 0'><img id='bpic' src="${item.pic}"><div style = 'text-align:center;color:#333;'>${item.name}</div><p style = 'font-size:12px;color:#999;text-align:center'>${item.musicNum}首歌曲</p></li>`);
+                        } else {
+                            $('#small').append(`<li uid= '${item.id}' style = 'width:182px;height:38px;margin: 40px 50px 0 0'><img id='spic' src="${item.pic}"><span style = 'font-size:14px;color:#333;'>${item.name}</span></li>`);
+                        }
+                    } else {
+                        $('#small').append(`<li uid= '${item.id}' style = 'width:182px;height:38px;margin: 40px 50px 0 0'><img id='spic' src="${item.pic}"><span style = 'font-size:14px;color:#333;'>${item.name}</span></li>`);
+                    }
+                });
+                c = Math.ceil(res.data.total / 100);
+                $('#page').append(`<span class = 'last'><</span>`);
+                $('#page').append(`<span class = 'pageNum'>${1}</span>`);
+                if (d - 1 > 2) {
+                    $('#page').append(`<span class='more'>...</span>`);
+                }
+                if (d == 1) {
+
+                    $('#page').append(`<span class = 'pageNum'>${d + 1}</span>`);
+                    $('#page').append(`<span class = 'pageNum'>${d + 2}</span>`);
+                    $(`.pageNum`).eq(0).css('background-color', '#FFDF1F');
+                    if (c - d > 2) {
+                        $('#page').append(`<span class='more'>...</span>`);
+                    }
+                    $('#page').append(`<span class = 'pageNum'>${c}</span>`);
+                    $('#page').append(`<span class = 'next'>></span>`);
+                } else if (d == 2) {
+
+                    $('#page').append(`<span class = 'pageNum'>${d}</span>`);
+                    $('#page').append(`<span class = 'pageNum'>${d + 1}</span>`);
+                    $(`.pageNum`).eq(1).css('background-color', '#FFDF1F')
+                    if (c - d > 2) {
+                        $('#page').append(`<span class='more'>...</span>`);
+                    }
+                    $('#page').append(`<span class = 'pageNum'>${c}</span>`);
+                    $('#page').append(`<span class = 'next'>></span>`);
+                } else if (d == c - 1) {
+
+                    $('#page').append(`<span class = 'pageNum'>${d - 1}</span>`);
+                    $('#page').append(`<span class = 'pageNum'>${d}</span>`);
+                    $(`.pageNum`).eq(2).css('background-color', '#FFDF1F')
+                    if (c - d > 2) {
+                        $('#page').append(`<span class='more'>...</span>`);
+                    }
+                    $('#page').append(`<span class = 'pageNum'>${c}</span>`);
+                    $('#page').append(`<span class = 'next'>></span>`);
+                } else if (d == c) {
+                    $('#page').append(`<span class = 'pageNum'>${d - 2}</span>`);
+                    $('#page').append(`<span class = 'pageNum'>${d - 1}</span>`);
+                    if (c - d > 2) {
+                        $('#page').append(`<span class='more'>...</span>`);
+                    }
+                    $('#page').append(`<span class = 'pageNum'>${c}</span>`);
+                    $(`.pageNum`).eq(3).css('background-color', '#FFDF1F')
+                    $('#page').append(`<span class = 'next'>></span>`);
+                } else {
+                    $('#page').append(`<span class = 'pageNum'>${d - 1}</span>`);
+                    $('#page').append(`<span class = 'pageNum'>${d}</span>`);
+                    $('#page').append(`<span class = 'pageNum'>${d + 1}</span>`);
+                    $(`.pageNum`).eq(2).css('background-color', '#FFDF1F')
+                    if (c - d > 2) {
+                        $('#page').append(`<span class='more'>...</span>`);
+                    }
+                    $('#page').append(`<span class = 'pageNum'>${c}</span>`);
+                    $('#page').append(`<span class = 'next'>></span>`);
+                }
+
+                $('#page').click(function () {
+                    if (event.target.nodeName != 'DIV' && !($(event.target).hasClass('more')) && $(event.target).hasClass('pageNum')) {
+                        d = $(event.target).text() - 0;
+                        $('#singer').html(`<ul id="big"></ul><ul id="small"></ul><div id="page"></div>`);
+                        reset();
+                    } else if ($(event.target).hasClass('last') && d > 1) {
+                        d--;
+                        $('#singer').html(`<ul id="big"></ul><ul id="small"></ul><div id="page"></div>`);
+                        reset();
+                    } else if ($(event.target).hasClass('next') && d < c) {
+                        d++;
+                        $('#singer').html(`<ul id="big"></ul><ul id="small"></ul><div id="page"></div>`);
+                        reset();
+                    }
+                })
+                $('#page').mouseover(null)
+                $('#page').mouseout(null)
+                $('#page').click(null)
+                $('#big').click(getId);
+                $('#small').click(getId);
+            }
+            console.log(d);
+        }
+        function getId() {
+            if (event.target.nodeName == 'IMG' || event.target.nodeName == 'DIV' || event.target.nodeName == 'SPAN') {
+                ajax('get', `http://39.96.88.57:9090/api/www/artist/artist?artistid=${$(event.target).parent().attr('uid')}&httpsStatus=1&reqId=4d97ec80-1528-11ec-88e6-7f341756bb63`, null, function (res) {
+                    if (res.data.artistFans / 10000 > 1) {
+                        var fans = (res.data.artistFans / 10000).toFixed(1) + 'W';
+                    } else {
+                        var fans = res.data.artistFans
+                    }
+                    $('#taowa').html(`<div id="hezi">
+                          <div id="singer-massage">
+                              <img id="photo" src="${res.data.pic300}" alt="">
+                              <div id="massage">
+                                  <p id="name">${res.data.name}</p>
+                                  <div id="song">
+                                      单曲: <span id="songNum">${res.data.musicNum}</span>
+                                      专辑: <span id="zhuanjiNum">${res.data.albumNum}</span>
+                                      MV: <span id="MVNum">${res.data.mvNum}</span>
+                                      粉丝: <span id="fansNum">${fans}</span>
+                                  </div>
+                                  <div id="another">
+                                      英文名: <span id="enName">${res.data.aartist}</span>
+                                      国籍: <span id="guoji">${res.data.country}</span>
+                                      语言: <span id="lan">${res.data.language}</span>
+                                      出生地: <span id="chushengdi">${res.data.birthplace}</span>
+                                      星座: <span id="xingzuo">${res.data.constellation}</span>
+                                  </div>
+                                  <div id="btns">
+                                      <button>播放全部歌曲</button>
+                                      <button>收藏</button>
+                                      <button>使用客户端查看歌手</button>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <div id='geshouhezi'>
+                            <ul id='fenlei'>
+                                <li id='danqu'>单曲</li>
+                                <li id='zhuanji'>专辑</li> 
+                                <li id='mv'>MV</li> 
+                                <li id='jieshao'>简介</li> 
+                            </ul>
+                            <table cellspacing = '0'>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>歌曲</th>
+                                    <th>专辑</th>
+                                    <th>时长</th>
+                                </tr>
+                            </table>
+                        </div>
+                      `)
+                })
+                ajax('get',`http://39.96.88.57:9090/api/www/artist/artistMusic?artistid=${$(event.target).parent().attr('uid')}&pn=1&rn=30&httpsStatus=1&reqId=7297f870-154d-11ec-b0d5-57ef38c5d2ad`,null,function(res){
+                    res.data.list.forEach((item,index)=>{
+                        if (index%2) {
+                            $('table').append(`<tr class='fafafa'>
+                                <td>
+                                    <span id='xuhao'>${index+1}</span>
+                                    <img src='${item.albumpic}'>
+                                </td>
+                                <td>
+                                    <span>${item.name}</span>
+                                </td>
+                                <td>
+                                    <span>${item.album}</span>
+                                </td>
+                                <td>
+                                    <span>${item.songTimeMinutes}</span>
+                                </td>
+                            </tr>`)
+                        }else{
+                            $('table').append(`<tr class='fff'>
+                                <td>
+                                    <span id='xuhao'>${index+1}</span>
+                                    <img src='${item.albumpic}'>
+                                </td>
+                                <td>
+                                    <span>${item.name}</span>
+                                </td>
+                                <td>
+                                    <span>${item.album}</span>
+                                </td>
+                                <td>
+                                    <span>${item.songTimeMinutes}</span>
+                                </td>
+                            </tr>`)
+                           
+                        }
+                    })
+                    console.log(res);
+                })
+            }
+        }
+    </script>
+</body>
+
+</html>
