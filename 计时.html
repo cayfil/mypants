@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        section{
+            text-align: center;
+            color: #01A3D9;
+            height: 300px;
+            line-height: 300px;
+            font-size:120px;
+            font-weight: bolder;
+            text-shadow:7px 7px 7px #07b7f1;
+            user-select: none;
+        }
+        p {
+            margin: 50px auto;
+            width: 300px;
+            border: 5px solid #01A3D9;
+            font-size: 42px;
+            font-weight: bold;
+            border-radius: 20px;
+            position:relative;
+            z-index: 10086;
+            user-select: none;
+        }
+
+        div {
+            text-align: center;
+            width: 400px;
+            height: 200px;
+            margin: 100px auto;
+            background-color: #fff;
+            padding-top: 30px;
+            border: 25px solid #01A3D9;
+            border-radius: 60px;
+            position: relative;
+            z-index: 10068;
+            user-select: none;
+        }
+
+        button {
+            font-size: 24px;
+            width: 150px;
+            height: 40px;
+            border-radius: 15px;
+            font-weight: bold;
+            color: violet;
+            border: 1px solid violet;
+            background-color: #fff;
+            user-select: none;
+        }
+
+        #canvas {
+            width:400px;
+            height: 300px;
+            background-color: transparent;
+            position: absolute;
+            left: -200px;
+            top: -160px;
+            z-index: -1;
+            transform: skew(20deg) rotate(15deg);
+        }
+        div::after{
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 140px;
+            background-color: #01A3D9;
+            transform: rotate(45deg);
+            position: absolute;
+            top: -126px;
+            left: 260px;
+            border-radius: 10px;
+            z-index: -2;
+        }
+        div::before{
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 140px;
+            background-color: #01A3D9;
+            transform: rotate(-45deg);
+            position: absolute;
+            top: -126px;
+            left: 120px;
+            border-radius: 10px;
+            z-index: -2;
+        }
+    </style>
+</head>
+
+<body onload="mycanvas()">
+
+    <section>
+        BILIBILI
+    </section>
+    <div>
+        <canvas id="canvas" >
+        </canvas>
+        <button id="on">点击开始</button>
+        <button id="reset">重置时间</button>
+        <p id="time"></p>
+    </div>
+    <script>
+
+        function mycanvas() {
+            var canvas = document.getElementById('canvas');
+            if (canvas == null)
+                return false;
+            var context = canvas.getContext('2d');
+            context.fillStyle = "#EEEEFF";
+            context.fillRect(0, 0, 0, 0);
+            context.strokeStyle = "#ffccee";
+            context.lineWidth = 7;
+
+            context.beginPath();
+            var n = 2;
+            for (theta = 0; theta <= 2 * Math.PI; theta += Math.PI / 360) {
+                e = 20 * (1 + Math.cos(n * theta) / 1);
+                f = e * (1 + Math.sin(2 * n * theta));
+                x1 = 150 + f * Math.cos(theta);
+                x2 = 150 + f * Math.cos(theta + Math.PI / 5);
+                y1 = 80 - f * Math.sin(theta);
+                y2 = 80 - f * Math.sin(theta + Math.PI / 5);
+                context.moveTo(x1, y1);
+                context.lineTo(x2, y2);
+            }
+            context.closePath();
+            context.stroke();
+        }
+        var tim = document.getElementById('time');
+        function zero(num) {
+            if (num < 10) {
+                return '0' + num;
+            }
+            return num;
+        }
+        var date = new Date(0, 0, 0);
+        var a = 0, b = 0, c = 0;
+        tim.innerHTML = `${zero(a)} : ${zero(b)} : ${zero(c)}`;
+        function time() {
+
+            c++;
+            if (c == 60) {
+                c = 0;
+                b++;
+            }
+            if (b == 60) {
+                b = 0;
+                a++
+            }
+
+            tim.innerHTML = `${zero(a)} : ${zero(b)} : ${zero(c)}`;
+        }
+        var on = document.getElementById('on');
+        var reset = document.getElementById('reset');
+        var flag = 1;
+        // 开关点击按钮触发
+        on.onclick = function () {
+            //判断定时器是否触发,0触发 ,1没有触发
+            if (flag) {
+                time();
+                // 每次开始都是创建了一个新的定时器,序号也会发生变化,为了能够暂停新的定时器,把他的返回值赋给一个变量
+                kaiguan = setInterval(time, 1000);
+                flag = 0;
+                on.innerHTML = '点击暂停'
+                on.style.backgroundColor = 'violet'
+                on.style.color = 'white'
+            } else {
+
+                flag = 1;
+                // 清除计时器实现暂停
+                clearInterval(kaiguan);
+                on.innerHTML = '点击开始'
+                on.style.backgroundColor = 'white'
+                on.style.color = 'violet'
+            }
+        }
+        reset.onclick = function () {
+            flag = 1;
+            on.innerHTML = '点击开始';
+            clearInterval(kaiguan);
+            a = 0;
+            b = 0;
+            c = 0;
+            tim.innerHTML = `${zero(a)} : ${zero(b)} : ${zero(c)}`;
+            on.style.backgroundColor = 'white';
+            on.style.color = 'violet';
+        }
+    </script>
+</body>
+
+</html>
