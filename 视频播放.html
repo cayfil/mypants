@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        div {
+            margin: auto;
+            width: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <video :src='mvUrl' controls></video>
+    </div>
+    <script>
+        var sid = location.href.split('?')[1];
+        axios.get(`http:///39.96.88.57:9090/url?rid=${sid}&response=url&format=mp4%7Cmkv&type=convert_url&t=1631878166666&httpsStatus=1&reqId=83e9cea0-17aa-11ec-9c33-b758d4d0b902`).then(res => {
+            var app = new Vue({
+                el: '#box',
+                data: {
+                    mvUrl: res.data,
+                },
+            })
+            var a = document.getElementsByTagName('video')[0];
+                a.play();
+        }).catch(err => {
+            console.log(err);
+        })
+
+    </script>
+</body>
+
+</html>

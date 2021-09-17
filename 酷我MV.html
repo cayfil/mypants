@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2807955_4gz4ygf2ilw.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #box {
+            width: 1400px;
+            margin: auto;
+            display: none;
+        }
+
+        #MVlist {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #MVlist li {
+            width: 264px;
+            height: 241px;
+            margin-right: 15px;
+
+        }
+
+        #artist {
+            font-size: 14px;
+            color: #999;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+
+        #artist:hover {
+            color: #333;
+        }
+
+        h4,
+        p {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        #tukuang {
+            width: 264px;
+            height: 156px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #musicname {
+            font-weight: normal;
+            font-size: 18px;
+            color: #333;
+            margin: 12px 0;
+            cursor: pointer;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        #musicname:hover {
+            font-weight: 600;
+        }
+
+        img {
+            width: 264px;
+            height: 156px;
+            cursor: pointer;
+            transition: transform .5s ease-out;
+        }
+
+        #tukuang:hover img {
+            transform: scale(1.1);
+        }
+
+        .zhezhao {
+            transition: background .5s;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: absolute;
+            z-index: 1;
+            background-color: transparent;
+        }
+
+        #tukuang:hover .zhezhao {
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        #bofang {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: #fff;
+            margin: 53px auto;
+            display: none;
+            text-align: center;
+            line-height: 51px;
+        }
+
+        #tukuang:hover #bofang {
+            display: block;
+        }
+
+        .iconfont {
+            font-size: 20px;
+            margin-right: -4px;
+        }
+
+        #class {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        #class li {
+            padding: 4px 14px;
+            font-size: 14px;
+            color: #333;
+            border-radius: 14px;
+            cursor: pointer;
+        }
+
+        .yellow {
+            background-color: #ffe443;
+            font-weight: 800;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <ul id="class">
+            <li v-for='(value,key) in obj' :uid=value @click='click'>{{key}}</li>
+        </ul>
+        <ul id="MVlist">
+            <li v-for='item in arr'>
+                <div id="tukuang">
+                    <img :src=item.pic>
+                    <div class="zhezhao" :sid = item.id @click = 'Mvclick'>
+                        <div id="bofang">
+                            <i class="iconfont icon-bofang"></i>
+                        </div>
+                    </div>
+                </div>
+                <h4><span id="musicname" :sid = item.id @click = 'Mvclick'>{{item.name}}</span></h4>
+                <p><span id="artist" :sid = item.artistidid>{{item.artist}}</span></p>
+            </li>
+        </ul>
+    </div>
+    <script>
+        axios.get('http://39.96.88.57:9090/api/www/music/mvList?pid=236682871&pn=1&rn=30&httpsStatus=1&reqId=ebc34c40-15ed-11ec-8e54-7930dd8f1de6').then(res => {
+            // console.log(res.data);
+            var app = new Vue({
+                el: '#box',
+                data: {
+                    arr: res.data.data.mvlist,
+                    obj: {
+                        首播: 236682871,
+                        华语: 236682731,
+                        日韩: 236742444,
+                        网络: 236682773,
+                        欧美: 236682735,
+                        现场: 236742576,
+                        热舞: 236682777,
+                        伤感: 236742508,
+                        剧情: 236742578,
+                    },
+                },
+                methods: {
+                    click: function () {
+                        if (event.target.nodeName == 'LI') {
+                            for (let i = 0; i < this.$el.children[0].children.length; i++) {
+                                this.$el.children[0].children[i].className = '';
+                            }
+                            event.target.className = 'yellow';
+                            var uid = event.target.getAttribute('uid');
+                            axios.get(`http://39.96.88.57:9090/api/www/music/mvList?pid=${uid}&pn=1&rn=30&httpsStatus=1&reqId=ebc34c40-15ed-11ec-8e54-7930dd8f1de6`).then(res => {
+                                console.log(res);
+                                this.arr = res.data.data.mvlist
+                            })
+                        } else {
+                            return
+                        }
+                    },
+                    Mvclick:function(){
+                        var sid = event.target.getAttribute('sid');
+                        //http://www.kuwo.cn/comment?type=get_comment&f=web&page=1&rows=20&digest=7&sid=156755380&uid=0&prod=newWeb&httpsStatus=1&reqId=fcedf300-17a8-11ec-bebf-ed7679a56eed
+                        //http://39.96.88.57:9090/api/www/music/musicInfo?mid=${sid}&ip=&cip=&httpsStatus=1&reqId=34ab82d1-17a9-11ec-84af-7be65800c8c8
+                        window.location.href=`./视频播放.html?${sid}`; 
+                    },
+                }
+            })
+            document.getElementById('box').style.display = 'block';
+        }).catch(err => {
+            console.log(err);
+        })
+    </script>
+</body>
+
+</html>
