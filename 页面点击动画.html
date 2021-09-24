@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body style='height: 2000px;'>
+    <script>
+        function random(a, b) {
+            return Math.floor(Math.random() * (b >= a ? b - a : a - b)) + (b >= a ? a : b);
+        }
+        function color() {
+            return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`
+        }
+        function word() {
+            var arr = ['莫挨老子', '泥奏凯', '駄目です', '嫌だ', 'kny', '葛玉豪臭弟弟', '止めて', '滚犊子', '刺挠', '不↘得↗劲↘'];
+            // var arr = ['o']
+            return arr[random(0, arr.length - 1)]
+        }
+        $(window).mousedown(function () {
+            if (event.button == '0') {
+                $(window).mousemove(function (e) {
+                    var x = e.clientX - $('p').innerWidth() / 2;
+                    var y = e.clientY - $('p').innerHeight() / 2;
+                    $('body').append(`<p>${word()}</p>`);
+                    $('p').last().css({ position: 'fixed', color: color(), top: y, left: x }).animate({ marginTop: -50, opacity: 0 }, 1000, function () {
+                        $(this).remove();
+                    })
+                })
+            }
+        })
+        $(window).mouseup(function () {
+            $(window).off('mousemove')
+        })
+    </script>
+</body>
+
+</html>
