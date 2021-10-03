@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星空特效</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow: auto;
+            background-color: #000;
+        }
+
+        h3 {
+            position: absolute;
+            line-height: 50px;
+            letter-spacing: 5px;
+            color: violet;
+            width: 1300px;
+            top: 1%;
+            left: 20%;
+            margin-left: -200px;
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <audio src="https://ck-sycdn.kuwo.cn/67aa46f1b03f7d643b2033e499a4cbf8/6158d366/resource/n1/98/76/1532139173.mp3" loop></audio>
+    <h3>
+
+    </h3>
+    <canvas></canvas>
+    
+    <script>
+        var flag = 1
+        var audio = document.getElementsByTagName('audio')[0];
+        document.body.onclick = function(){
+            if(flag){
+                audio.play();
+                audio.volume = .3
+                flag = 0
+            }else{
+                audio.pause();
+                flag = 1
+            }
+        }
+        var canvas = document.querySelector("canvas");
+        ctx = canvas.getContext("2d");
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        var canvas2 = document.createElement("canvas");
+        ctx2 = canvas2.getContext("2d");
+        canvas2.width = 100;
+        canvas2.height = 100;
+        var a = canvas2.width / 2;
+        var grandient = ctx.createRadialGradient(a, a, 0, a, a, a);
+        grandient.addColorStop(0.025, '#fff');
+        grandient.addColorStop(0.1, 'hsl(220,59%,18%)');
+        grandient.addColorStop(0.025, 'hsl(220,60%,33%)');
+        grandient.addColorStop(1, "transparent");
+        ctx2.fillStyle = grandient;
+        ctx2.beginPath();
+        ctx2.arc(a, a, a, 0, Math.PI * 2);
+        ctx2.fill();
+        ctx2.closePath();
+        var stars = [];
+        var count = 0;
+        function Star() {
+            this.pos = Math.floor(Math.random() * w / 2 - 100);
+            this.r = Math.floor(Math.random() * 100);
+            this.dx = w / 2;
+            this.dy = h / 2;
+            this.rand = Math.floor(Math.random() * 360);
+            this.speed = this.pos / 100000;
+            stars[count] = this;
+            count++;
+        }
+        Star.prototype.draw = function () {
+            var x = Math.sin(this.rand + 1) * this.pos + this.dx;
+            y = Math.cos(this.rand) * this.pos / 2 + this.dy;
+            ctx.drawImage(canvas2, x - this.r / 2, y - this.r / 2, this.r, this.r);
+            this.rand = this.rand + this.speed;
+        }
+        for (var i = 0; i < 1000; i++) {
+            new Star();
+        }
+        function anmit() {
+            ctx.clearRect(0, 0, w, h);
+            for (var i = 0; i < stars.length; i++) {
+                stars[i].draw();
+            }
+            requestAnimationFrame(anmit);
+        }
+        anmit();
+        var oH = document.getElementsByTagName("h3")[0];
+        var arr = ['字有点多不确定你会看完,所以给你准备了音乐,点击页面播放音乐',"对不起宝宝,一直到约定的国庆节才来道歉", "我承认三个月前我急了,做了许多的傻事,", "冷静下来想想,真是不应该",'你有你的想法,我应该无条件支持才对,而不是无理取闹','以前的我总是选择逃避困难,只想着不好的事情赶紧过去','做事情很少考虑后果,很不踏实的一个人','后来我知道了,这样下去是不行的,必须考虑到我们的未来','所以我选择出去继续学习,我真的从来都没有像现在这么好学','高三我学不进去听课就犯困,而现在反了过来,不听课困得要要死,一听课反而精神了','照这样下去,我毕业应该是稳稳的,其实目标城市我还没选好','一直在纠结是去风景好的杭州,还是有迪士尼的上海,这样等你放假了我也可以把你接过去','等我在外边干几年有买房子的能力的时候,就考虑在郑州或者新乡买套房子,属于我们的','伯父伯母如果不希望你离的太远咱就在新乡买个房子,我也有工作经验,有资格和咱这边的it公司要更高的工资了','你是一个很要强的姑娘,所以我也不会说什么我养你你就全职家里蹲就行','这是事业上.','家庭上我们自己出去住,不带家长一起,结婚也不着急','孩子的话,以后生活压力越来越大,中国生孩子的人应该会越来越少','所以我们就算不生也不会有外来的舆论什么的,可以放心,而且我很讨厌小孩子','这样也不会有人分走你我的爱了','至于家里的账单,其实我们刚开始的时候可以一人试着管一段时间','看看谁管账的时候,能存的住钱,会理财,就让谁管','说完了家庭,再说说近一点的,','曾经的我非常的不自信,连见你朋友的勇气都没有,总感觉别人都在嘲笑自己','荆天说的对,心理脆弱的人,干什么都不行,我必须得改变现状','我们那每天早上和中午都要有一次演讲,当着所有人的面就是锻炼你的胆量','现在我觉得现在已经可以让你家人知道我的存在了','但见面的话最好还是我入职以后,这不是胆量不胆量的问题,而是一次考验','有一份好工作,是我面对这次考验最大的靠山,所以现在可以让他们知道你有男朋友了,但见面还是留到下一年','至于兴趣,其实最近我已经在考虑追剧了,因为最近动漫没什么好看的','而且我也不想看动漫了,都是虚的,可是我又不知道该从什么剧开始入坑','如果看了一个不好的,会不会打击到我,虽然我知道几个好的剧,但是这些不是你看的那种,而且我也不是很喜欢','这些话我不知道你会不会看进去,也不知道你会不会相信','后面的学习过程,作业代码,我会每天打卡朋友圈','督促学习,其次就是减肥问题,有那个姑娘不希望自己的男朋友好看一点','怎么说呢,我会克制自己的食欲,锻炼的话是真的没时间','只能先从吃上边治,然后就是放学路上,尽量小跑,不坐电梯','晚上下课绕着教学楼来几圈,微信步数我也不知道怎么看,等我查查,每天一起打卡','说事道歉,其实还是规划未来,因为我不能一直是以前的那个样子','我其实并不求你现在就原谅我,等我回去后,可以看看我能否坚持下去打卡在考虑要不要原谅我','但我真心希望可以约你出去说说话,毕竟这么长时间了,有些话打出来和说出来差距还是很大的','如果可以的话十月四日在胖东来或者公园见个面吧,时间以你为准,只要你有空','希望你可以给我一个答复,不管是同意还是不同意,同意的话,给我发个时间,不同意的话,就给我发个再考验一段时间','如果已经晚了可以改成五号或者六号','我知道你也在为未来拼搏,就算你把我从黑名单里放出来,我也不会打扰你的','倒也不是打扰什么的,拼搏路上难免会有坎坷,让我们互相勉励,共同进步','希望你可以考虑一下我的话________永远爱你的张存言'],
+            index = 0,
+            arrLen = arr.length,
+            strLen = arr[0].length;
+        pos = 0,
+            row = 0,
+            str = "",
+            timer = null;
+        function print() {
+            while (row < index) {
+                str = str + arr[row] + "<br>";
+                row++;
+            }
+            oH.innerHTML = str + arr[index].substring(0, pos);
+            if (pos == strLen) {
+                index++;
+                pos = 0;
+                if (index < arr.length) {
+                    strLen = arr[index].length;
+                    timer = setTimeout(print, 130);
+                }
+            } else {
+                pos++;
+                timer = setTimeout(print, 130);
+            }
+        }
+        setTimeout(print, 130);
+    </script>
+</body>
+
+</html>
