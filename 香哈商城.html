@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2807955_yz2s9af1b8e.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 13.333vw;
+        }
+
+        body {
+            background-color: #f3f3f3;
+            font-size: 0.16rem;
+        }
+        nav{
+            width: 100%;
+            height: .35rem;
+            display: flex;
+            background-color: #FF4D4D;
+            justify-content: space-between;
+            line-height: .35rem;
+            padding: 0 .15rem;
+            color: white;
+        }
+        .nav-left{
+            display: flex;
+            width: 2rem;
+            justify-content: space-between;
+        }
+        .signal span{
+            display: inline-block;
+            width: 0.1rem;
+            height: .1rem;
+            border: .01rem solid white;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+        .signal span:nth-last-of-type(1){
+            background-color: transparent;
+        }
+        header{
+            width: 100%;
+            height: .7rem;
+            background-color: #FF4D4D;
+            color: white;
+            padding: 0 .15rem;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
+        header img{
+            height: .35rem;
+        }
+        .title{
+            font-size: .3rem;
+        }
+        .main-top{
+            width: 100%;
+        }
+        .main-top img{
+            width: 100%;
+        }
+        .main-leibie1{
+            overflow: hidden;
+            background-color: #fff;
+        }
+        .main-leibie{
+            width: 75%;
+            margin: .3rem auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .main-leibie li{
+            margin-top: .3rem;
+        }
+        .main-leibie li div{
+            text-align: center;
+            font-size: .25rem;
+            margin-top: 10px;
+        }
+        .xianshi li{
+            display: flex;
+            background-color: #fff;
+            margin-top: .3rem;
+            height: 2.65rem;
+            width: 100%;
+        }
+        .xianshi li img{
+            height: 100%;
+        }
+        .xianshi li>div{
+            width: 100%;
+        }
+        .xianshi li .red{
+            width: 1.2rem;
+            height: .5rem;
+            background-color: #FF4D4D;
+            font-size: .25rem;
+            font-weight: 500;
+            line-height: .5rem;
+            padding: 0 0 0 .15rem;
+            color: white;
+        }
+        .qiang{
+            display: flex;
+        }
+        .xianshi li .triangle{
+            width: 0;
+            height: 0;
+            border: .25rem solid transparent;
+            border-left-color: #FF4D4D;
+        }
+        .goodname{
+            padding: 0 .1rem;
+            margin-top: .1rem;
+            font-size: .25rem;
+            width: 3.5rem;
+        }
+        .price{
+            display: flex;
+            justify-content: space-between;
+            padding: 0 .1rem;
+            font-size: .2rem;
+            color: #BFBFBF;
+            margin-top: .2rem;
+        }
+        .now{
+            font-size: .25rem;
+            color: #FF4346;
+        }
+        .before{
+            color: #909090;
+            text-decoration: line-through;
+        }
+        .time1{
+            text-align: right;
+            font-size: .25rem;
+            color: #BFBFBF;
+            margin-top: .3rem;
+            padding-right: .1rem;
+        }
+        .time1 img{
+            width: .3rem;
+            vertical-align: middle;
+        }
+        .greatshop{
+            width: 100%;
+            display: flex;
+            flex-grow: 1;
+            padding-left: .2rem;
+        }
+        .faxian {
+            background-color: #fff;
+            margin-top: .2rem;
+            overflow: hidden;
+        }
+        .faxian h3{
+            font-size: .35rem;
+            font-weight: normal;
+            padding: .2rem;
+        }
+        .greatshop li{
+            padding: .1rem;
+        }
+        .greatshop li img{
+            width: 2rem;
+        }
+        .greatshop li .money{
+            font-size: .25rem;
+            color: #FF4346;
+        }
+        .greatshop li .goodtitle{
+            font-size: .2rem;
+            color: #7E7E7E;
+        }
+        .greatshop li .shop{
+            font-size: .25rem;
+        }
+        .main-bottom{
+            margin-top: .2rem;
+        }
+        .life{
+            background-color: #fff;
+            padding-bottom: .1rem;
+        }
+        .friend{
+            display: flex;
+            justify-content: space-between;
+            padding: .1rem .2rem;
+            font-size: .3rem;
+            height: .5rem;
+            line-height: .5rem;
+        }
+        .friend i{
+            font-size: .3rem;
+        }
+        .life ul li{
+            width: 100%;
+            margin-top: .2rem;
+        }
+        .life ul li img{
+            width: 100%;
+        }
+        .hot{
+            margin-top: .2rem;
+            padding: .1rem;
+        }
+        .hot>div{
+            padding-left: .2rem;
+            font-size: .3rem;
+        }
+        .hotgood{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: .1rem 0 1rem;
+
+        }
+        .hotgood li{
+            width: 3.25rem;
+            background-color: #fff;
+            padding: 0 .1rem;
+        }
+        .hotgood li img{
+            width: 100%;
+        }
+        .hotgood .goodtitle{
+            font-size: .29rem;
+            color: #2B2B2B;
+        }
+        .hotgood .xiaoliang{
+            margin: .35rem 0 .1rem;
+            font-size: .25rem;
+            color: #909090;
+        }
+        footer{
+            width: 100%;
+            height: .8rem;
+            position: fixed;
+            padding: 0 .2rem;
+            bottom: 0;
+            background-color: #fff;
+        }
+        footer ul{
+            height: .8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        footer ul li{
+            text-align: center;
+        }
+        footer li img{
+            width: .4rem;
+        }
+        footer li:nth-of-type(3) img{
+            width: .9rem;
+        }
+        footer li div{
+            font-size: .18rem;
+            color: #898989;
+        }
+        footer li:nth-of-type(2) div{
+            color: #EA462F;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <section class="nav-left">
+            <div class="signal">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="card">
+                <span>中国联通</span>
+            </div>
+            <div class="card">
+                <span>4G</span>
+            </div>
+        </section>
+        <section class="nav-mid">
+            <div class="time">
+                <span>09:17</span>
+            </div>
+        </section>
+        <section class="nav-right">
+            <span>100%</span>
+            <i class="iconfont icon-electricity-full"></i>
+        </section>
+    </nav>
+    <header>
+        <img class="last" src="./images/lef.png" alt="">
+        <div class="title">香哈商城</div>
+        <img class="shopcar" src="./images/商城.png" alt="">
+    </header>
+    <main>
+        <div class="main-top">
+            <img src="./images/燕窝.jpg" alt="">
+        </div>
+        <div class="main-mid">
+            <div class="main-leibie1">
+                <ul class="main-leibie">
+                    <li>
+                        <img src="./images/商城.jpg" alt="">
+                        <div>厨房电器</div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (1).jpg" alt="">
+                        <div>零食</div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (2).jpg" alt="">
+                        <div>养生食材</div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (3).jpg" alt="">
+                        <div>茶酒饮品</div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (4).jpg" alt="">
+                        <div>厨具餐具</div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (5).jpg" alt="">
+                        <div>果蔬生鲜</div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (6).jpg" alt="">
+                        <div>烘焙</div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (7).jpg" alt="">
+                        <div>更多</div>
+                    </li>
+                </ul>
+            </div>
+            <ul class="xianshi">
+                <li>
+                    <img src="./images/商城 (8).jpg" alt="">
+                    <div>
+                        <div class="qiang">
+                            <div class="red">限时抢购</div>
+                            <i class="triangle"></i>
+                        </div>
+                        <div class="goodname">
+                            &nbsp;沱沱工社&nbsp;蚕小宝&nbsp;&nbsp;(蚕蛹蛋) &nbsp;30枚/盒
+                        </div>
+                        <div class="price">
+                            <div>
+                                <span class="now">￥49.00</span>
+                                <del class="before">￥96.00</del>
+                            </div>
+                            <div>
+                                包邮
+                            </div>
+                        </div>
+                        <div class="time1">
+                            <img src="./images/商城 (11).jpg" alt="">
+                            <span>距结束:</span>
+                            <span>20时53分30秒</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="./images/商城 (9).jpg" alt="">
+                    <div>
+                        <div class="qiang">
+                            <div class="red">限时抢购</div>
+                            <i class="triangle"></i>
+                        </div>
+                        <div class="goodname">
+                            &nbsp;乡村寻味&nbsp;广昌-广昌米粉纯大米制作&nbsp; 4斤
+                        </div>
+                        <div class="price">
+                            <div>
+                                <span class="now">￥23.80</span>
+                                <del class="before">￥26.00</del>
+                            </div>
+                            <div>
+                                包邮
+                            </div>
+                        </div>
+                        <div class="time1">
+                            <img src="./images/商城 (11).jpg" alt="">
+                            <span>距结束:</span>
+                            <span>20时53分30秒</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="./images/商城 (10).jpg" alt="">
+                    <div>
+                        <div class="qiang">
+                            <div class="red">限时抢购</div>
+                            <i class="triangle"></i>
+                        </div>
+                        <div class="goodname">
+                            &nbsp;【享食着】&nbsp;1062g夏威夷果坚果零食大礼盒
+                        </div>
+                        <div class="price">
+                            <div>
+                                <span class="now">￥44.90</span>
+                                <del class="before">￥149.70</del>
+                            </div>
+                            <div>
+                                包邮
+                            </div>
+                        </div>
+                        <div class="time1">
+                            <img src="./images/商城 (11).jpg" alt="">
+                            <span>距结束:</span>
+                            <span>20时53分30秒</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="faxian">
+                <h3>发现好店</h3>
+                <ul class="greatshop">
+                    <li>
+                        <img src="./images/商城 (12).jpg" alt="">
+                        <div class="goodtitle">Bear/小熊健康无</div>
+                        <div class="money">￥119.00</div>
+                        <hr>
+                        <div class="shop">小熊妙想生活馆</div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (13).jpg" alt="">
+                        <div class="goodtitle">懒人汤料&#x3000;双荚皂</div>
+                        <div class="money">￥59.00</div>
+                        <hr>
+                        <div class="shop">懒人汤料</div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (14).jpg" alt="">
+                        <div class="goodtitle">【包邮 憨豆熊干</div>
+                        <div class="money">￥39.00</div>
+                        <hr>
+                        <div class="shop">憨豆熊</div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (12).jpg" alt="">
+                        <div class="goodtitle">Bear/小熊健康无</div>
+                        <div class="money">￥119.00</div>
+                        <hr>
+                        <div class="shop">小熊妙想生活馆</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-bottom">
+            <div class="life">
+                <div class="friend">
+                    <span>精彩生活圈</span>
+                    <i class="iconfont icon-xiangyoujiantou"></i>
+                </div>
+                <ul>
+                    <li>
+                        <img src="./images/商城 (15).jpg" alt="">
+                    </li>
+                    <li>
+                        <img src="./images/商城 (16).jpg" alt="">
+                    </li>
+                    <li>
+                        <img src="./images/商城 (17).jpg" alt="">
+                    </li>
+                </ul>
+            </div>
+            <div class="hot">
+                <div>热销值得购买</div>
+                <ul class="hotgood">
+                    <li>
+                        <img src="./images/商城 (19).jpg" alt="">
+                        <div class="goodtitle">Bear/小熊DDQ-D3126手持家用电动打蛋器</div>
+                        <div class="xiaoliang">已售55&#x3000;包邮</div>
+                        <hr>
+                        <div>
+                            <span class="now">￥44.90</span>
+                            &#x3000;
+                            <span class="before">￥149.70</span>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="./images/商城 (18).jpg" alt="">
+                        <div class="goodtitle">野农优品 秭归伦晚脐橙8斤</div>
+                        <div class="xiaoliang">已售106&#x3000;包邮</div>
+                        <hr>
+                        <div>
+                            <span class="now">￥65.90</span>
+                            &#x3000;
+                            <span class="before">￥99.70</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <ul>
+            <li>
+                <img src="./images/商城 (20).jpg" alt="">
+                <div>学做菜</div>
+            </li>
+            <li>
+                <img src="./images/商城 (21).jpg" alt="">
+                <div>商城</div>
+            </li>
+            <li>
+                <img src="./images/商城 (22).jpg" alt="">
+            </li>
+            <li>
+                <img src="./images/商城 (23).jpg" alt="">
+                <div>生活圈</div>
+            </li>
+            <li>
+                <img src="./images/商城 (24).jpg" alt="">
+                <div>我的</div>
+            </li>
+        </ul>
+    </footer>
+</body>
+
+</html>
