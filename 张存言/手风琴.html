@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2807955_nq3l7mo285l.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        #app {
+            width: 300px;
+            height: 600px;
+            border: 1px solid black;
+            margin: auto;
+            background-image: url(2.jpg);
+        }
+
+        #main {
+            height: 440px;
+            overflow: auto;
+        }
+
+        #main::-webkit-scrollbar {
+            width: 8px;
+            height: 1px;
+        }
+
+        #main::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: skyblue;
+            background-image: -webkit-linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.2) 25%,
+                    transparent 25%,
+                    transparent 50%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    rgba(255, 255, 255, 0.2) 75%,
+                    transparent 75%,
+                    transparent);
+        }
+
+        .group,
+        .hover {
+            margin: 10px 0;
+        }
+
+        .img1 {
+            width: 55px;
+            height: 55px;
+            border-radius: 55px;
+            margin-right: 10px;
+        }
+
+        #header {
+            padding: 40px 0;
+        }
+
+        #head {
+            padding-left: 15px;
+            display: flex;
+        }
+
+        #level {
+            color: goldenrod;
+            font-size: 12px;
+            text-shadow: 1px 1px 0 red;
+        }
+
+        .hover {
+            padding: 10px 20px;
+        }
+
+        .hover span {
+            cursor: default;
+        }
+
+        .hover:hover {
+            background-color: rgba(0, 0, 0, .1);
+        }
+
+        .img2 {
+            width: 40px;
+            height: 40px;
+            border-radius: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click='change'>{{model[modelId]}}模式</button>
+        <div id="header">
+            <div id="head">
+                <img :src="list.我的好友.content[0].img" class="img1">
+                <div>
+                    <div>
+                        <span>{{list.我的好友.content[0].name}}</span>
+                        <span id="level">lv55</span>
+                    </div>
+                    <div style="font-size: 12px;margin-top: 10px;">
+                        {{list.我的好友.content[0].info}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="main">
+            <div class="group" v-for='(val,key,index) in list'>
+                <div class="hover" @click='show(index,key)'>
+                    <i class="iconfont icon-xiangyoujiantou"
+                        :style=status?(val.status?arrow:null):(isshow==index?arrow:null)></i>
+                    <span>{{key}}</span>
+                </div>
+                <ul v-show="status?val.status:isshow == index">
+                    <li v-for='item in val.content' class="hover">
+                        <div id="head">
+                            <img :src="item.img" class="img2">
+                            <div>
+                                <div>
+                                    <span style="font-size: 14px;">{{item.name}}</span>
+                                    <span id="level">lv55</span>
+                                </div>
+                                <div style="font-size: 12px;margin-top: 5px;">
+                                    {{item.info}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        Vue.config.productionTip = false;
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                model: [
+                    '全展开',
+                    '手风琴'
+                ],
+                modelId: 1,
+                isshow: null,
+                status: false,
+                arrow: 'transform:rotate(90deg);display:inline-block',
+                list: {
+                    '我的好友': {
+                        "status": false,
+                        'content': [
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                        ],
+                    },
+                    '朋友': {
+                        'status': false,
+                        'content': [
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                        ],
+                    },
+                    '伙伴': {
+                        'status': false,
+                        'content': [
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                        ],
+                    },
+                    '家人': {
+                        'status': false,
+                        'content': [
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                        ],
+                    },
+                    '同学': {
+                        'status': false,
+                        'content': [
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                            {
+                                'img': '1.jpg',
+                                'name': 'ねぇ,どうして',
+                                'info': '纳吾言,琴瑟和,此外复何求?'
+                            },
+                        ],
+                    },
+                }
+            },
+            methods: {
+                show(i,key) {
+                    if (this.modelId) {
+                        if (this.isshow != i) {
+                            this.isshow = i;
+                        } else {
+                            this.isshow = null;
+                        }
+                    } else {
+                        if (this.list[key].status) {
+                            this.list[key].status = false
+                        } else {
+                            this.list[key].status = true
+                        }
+                    }
+                },
+                change() {
+                    if (this.modelId) {
+                        this.modelId = 0;
+                        this.status = true;
+                    } else {
+                        this.modelId = 1;
+                        this.status = false;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
